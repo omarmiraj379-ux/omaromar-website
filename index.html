@@ -195,8 +195,9 @@ footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted)}
   <span class="eyebrow">LET'S WORK TOGETHER</span>
   <h2>Request a service or quotation</h2>
   <p>Tell me what equipment you have and what assistance you need.</p>
-  <form id="enquiry">
-    <label>Your name
+   <form id="enquiry">
+    <form
+      label>Your name
       <input name="name" required autocomplete="name" placeholder="Full name">
     </label>
     <label>Phone number or email
@@ -231,40 +232,59 @@ footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted)}
 </footer>
 
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-document.getElementById('enquiry').addEventListener('submit', function(e) {
+  document.getElementById('enquiry').addEventListener('submit', function(e) {
+ 
+  document.getElementById('enquiry').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const d = new FormData(this);
-  const message = [
-    'Service enquiry — omaromar',
-    'Name: ' + d.get('name'),
-    'Contact: ' + d.get('contact'),
-    'Service: ' + d.get('service'),
-    'Details: ' + d.get('details')
-  ].join('\n');
 
-  // Enter your WhatsApp number with country code, digits only.
-  // Example format for Kenya: 2547XXXXXXXX
-  const whatsappNumber = '254707076782';
-  if (whatsappNumber) {
+  const form = this;
+  const d = new FormData(form);
+  const status = document.getElementById('status');
+
+  const name = String(d.get('name') || '').trim();
+  const contact = String(d.get('contact') || '').trim();
+  const service = String(d.get('service') || '').trim();
+  const details = String(d.get('details') || '').trim();
+
+  status.textContent = 'Saving your enquiry...';
+
+  try {
+    const { db } = await import('./firebase.js');
+    const { collection, addDoc, serverTimestamp } =
+      await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
+
+    await addDoc(collection(db, 'requests'), {
+      name: name,
+      phone: contact,
+      email: contact,
+      message: 'Service: ' + service + '\nDetails: ' + details,
+      createdAt: serverTimestamp()
+    });
+
+    const message = [
+      'Service enquiry — omaromar',
+      'Name: ' + name,
+      'Contact: ' + contact,
+      'Service: ' + service,
+      'Details: ' + details
+    ].join('\n');
+
+    const whatsappNumber = '254707076782';
     const url = 'https://wa.me/' + whatsappNumber +
       '?text=' + encodeURIComponent(message);
+
+    status.textContent = 'Enquiry saved successfully. Opening WhatsApp...';
     window.open(url, '_blank', 'noopener,noreferrer');
-    document.getElementById('status').textContent =
-      'Your enquiry is ready in WhatsApp. Please review and send it.';
-  } else {
-    document.getElementById('status').textContent =
-      'WhatsApp is not configured yet. Your enquiry details are shown below:';
-    const result = document.createElement('textarea');
-    result.readOnly = true;
-    result.rows = 6;
-    result.value = message;
-    result.setAttribute('aria-label', 'Your enquiry details');
-    this.querySelector('#status').after(result);
-    result.focus();
+  } catch (error) {
+    console.error(error);
+    status.textContent =
+      'We could not save your enquiry. Please try again later.';
   }
-});
+ });
 </script>
+<script type="module" src="./
+firebase.js"></script>
 </body>
 </html>
