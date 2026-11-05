@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
@@ -14,4 +15,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
+=======
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBbOyhMHn6-GMDU0RF-8Tox1R_e-PXqOtY",
+  authDomain: "my-customer-system.firebaseapp.com",
+  projectId: "my-customer-system",
+  storageBucket: "my-customer-system.firebasestorage.app",
+  messagingSenderId: "575635944124",
+  appId: "1:575635944124:web:f9ab10e3cf66b8351916b9"
+};
+
+const app = initializeApp(firebaseConfig);
+
+export const db = getFirestore(app);
+>>>>>>> d0baae2bcbcfde28eed841f4f7d196694147fc14
 export const auth = getAuth(app);
