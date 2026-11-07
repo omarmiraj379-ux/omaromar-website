@@ -2,430 +2,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <style>
-  .customer-contact {
-  max-width: 550px;
-  margin: 40px auto;
-  padding: 25px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-  font-family: Arial, sans-serif;
-}
-
-.customer-contact input,
-.customer-contact textarea {
-  width: 100%;
-  padding: 13px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 7px;
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-.customer-contact textarea {
-  min-height: 120px;
-}
-
-.customer-contact button {
-  width: 100%;
-  padding: 14px;
-  background: #168b49;
-  color: white;
-  border: none;
-  border-radius: 7px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.customer-contact button:disabled {
-  opacity: 0.6;
-}
-
-#formStatus {
-  margin-top: 12px;
-}
-</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b1422">
 <meta name="description" content="omaromar Technical Services — electronics repair, control systems, installation and maintenance.">
 <title>omaromar | Electronics & Control Services</title>
 <style>
-:root {
-  --bg:#0b1422; --panel:#14253a; --green:#c5f477;
-  --white:#f5f7fb; --muted:#b9c7d8; --line:#29394d;
-}
+:root{--bg:#0b1422;--panel:#14253a;--green:#c5f477;--white:#f5f7fb;--muted:#b9c7d8;--line:#29394d}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
-body{margin:0;background:var(--bg);color:var(--white);
-font:16px/1.7 system-ui,-apple-system,sans-serif}
+body{margin:0;background:var(--bg);color:var(--white);font:16px/1.7 system-ui,-apple-system,sans-serif}
 a{color:inherit;text-decoration:none}
 .container{width:min(1100px,90%);margin:auto}
-header{position:sticky;top:0;z-index:5;background:#0b1422f2;
-border-bottom:1px solid var(--line)}
-nav{min-height:72px;display:flex;align-items:center;
-justify-content:space-between;gap:18px}
+header{position:sticky;top:0;z-index:5;background:#0b1422f2;border-bottom:1px solid var(--line)}
+nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
 .logo{font-size:1.5rem;font-weight:850}
 .logo span,.accent{color:var(--green)}
 .links{display:flex;gap:20px;flex-wrap:wrap}
 .links a:hover{color:var(--green)}
 .hero{padding:85px 0 65px;max-width:850px}
-.eyebrow{color:var(--green);font-size:.78rem;font-weight:750;
-letter-spacing:.13em}
-h1{font-size:clamp(2.5rem,7vw,4.8rem);line-height:1.08;
-letter-spacing:-.045em;margin:18px 0}
+.eyebrow{color:var(--green);font-size:.78rem;font-weight:750;letter-spacing:.13em}
+h1{font-size:clamp(2.5rem,7vw,4.8rem);line-height:1.08;letter-spacing:-.045em;margin:18px 0}
 h2{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2}
 h3{line-height:1.3}
 p{color:var(--muted)}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
-.btn{display:inline-block;padding:11px 18px;border-radius:9px;
-border:1px solid #43516a;font:inherit;font-weight:700;cursor:pointer}
+.btn{display:inline-block;padding:11px 18px;border-radius:9px;border:1px solid #43516a;font:inherit;font-weight:700;cursor:pointer;text-align:center}
 .primary{background:var(--green);color:#101827;border-color:var(--green)}
+.btn-whatsapp{background:#25D366;color:#fff;border-color:#25D366;width:100%}
 section{padding:48px 0}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.card{background:var(--panel);border:1px solid var(--line);
-border-radius:16px;padding:24px;min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;min-width:0}
 .symbol{font-size:2rem;color:var(--green)}
 .price{color:var(--green);font-size:1.15rem;font-weight:750;margin:18px 0}
 .profile{display:grid;grid-template-columns:220px 1fr;gap:28px;align-items:center}
-.portrait{width:100%;aspect-ratio:4/5;object-fit:cover;
-border-radius:16px;background:var(--panel);border:1px solid var(--line)}
+.portrait{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
 .note{font-size:.85rem}
 form{display:grid;gap:15px;max-width:680px}
 label{display:grid;gap:6px}
-input,select,textarea{width:100%;padding:13px;border-radius:8px;
-border:1px solid #43516a;background:#101c2d;color:white;font:inherit}
+input,select,textarea{width:100%;padding:13px;border-radius:8px;border:1px solid #43516a;background:#101c2d;color:white;font:inherit}
 textarea{min-height:120px;resize:vertical}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--green)}
 footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted)}
-@media(max-width:650px){
- .links{gap:10px;font-size:.82rem}
- .hero{padding:58px 0 38px}
- .grid{grid-template-columns:1fr}
- .profile{grid-template-columns:1fr}
- .portrait{max-width:240px}
- section{padding:34px 0}
-}
+.customer-contact{max-width:550px;margin:40px auto;padding:25px;background:#ffffff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.1);font-family:Arial,sans-serif;color:#000}
+.customer-contact p{color:#555}
+.customer-contact input,.customer-contact textarea{width:100%;padding:13px;margin:10px 0;border:1px solid #ccc;border-radius:7px;box-sizing:border-box;font-size:16px;background:#fff;color:#000}
+.customer-contact textarea{min-height:120px}
+.customer-contact button{width:100%;padding:14px;background:#168b49;color:white;border:none;border-radius:7px;cursor:pointer;font-size:16px}
+.customer-contact button:disabled{opacity:0.6}
+.customer-contact .btn-wa{background:#25D366;margin-top:10px}
+#formStatus{margin-top:12px;color:#000}
+@media(max-width:650px){.links{gap:10px;font-size:.82rem}.hero{padding:58px 0 38px}.grid{grid-template-columns:1fr}.profile{grid-template-columns:1fr}.portrait{max-width:240px}section{padding:34px 0}}
 </style>
 </head>
 <body>
 <header>
   <nav class="container" aria-label="Main navigation">
     <a class="logo" href="#home">omaromar<span>.</span></a>
-    <div class="links">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#contact">Contact</a>
-    </div>
+    <div class="links"><a href="#about">About</a><a href="#services">Services</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a></div>
   </nav>
 </header>
-
 <main>
 <section class="container hero" id="home">
   <span class="eyebrow">ELECTRONICS • CONTROL • TECHNICAL SERVICES</span>
   <h1>Reliable repairs.<br>Smart <span class="accent">solutions.</span></h1>
-  <p>Professional electronics repair, control system troubleshooting,
-  equipment installation and maintenance for homes, businesses and
-  industrial applications.</p>
+  <p>Professional electronics repair, control system troubleshooting, equipment installation and maintenance for homes, businesses and industrial applications.</p>
   <div class="actions">
     <a class="btn primary" href="#contact">Request a service ↗</a>
+    <a class="btn" href="https://wa.me/254707076782?text=Hi%20Omar!%20I%20want%20to%20order%20a%20service">💬 WhatsApp Order</a>
     <a class="btn" href="#services">Explore services</a>
   </div>
 </section>
-
 <section class="container" id="about">
   <span class="eyebrow">ABOUT ME</span>
   <div class="profile">
     <div>
-      <!-- Replace profile.jpg with your own photo file -->
-      <img class="portrait" src="profile.jpg" alt="Omar, electronics and control technician"
-      onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
-      <div class="portrait" style="display:none;place-items:center;padding:20px;text-align:center">
-        <div><div style="font-size:3rem;color:#c5f477">O.</div>
-        <p>Add your profile photo as profile.jpg</p></div>
-      </div>
+      <img class="portrait" src="profile.jpg" alt="Omar, electronics and control technician" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+      <div class="portrait" style="display:none;place-items:center;padding:20px;text-align:center"><div><div style="font-size:3rem;color:#c5f477">O.</div><p>Add your profile photo as profile.jpg</p></div></div>
     </div>
-    <div>
-      <h2>Meet Omar</h2>
-      <p>I specialize in electronics and control systems repair,
-      installation and maintenance. My focus is on troubleshooting
-      faults, finding practical solutions and helping customers keep
-      their equipment operating reliably.</p>
-      <p>I value quality workmanship, attention to detail, continuous
-      learning and honest communication. My goal is to provide
-      dependable technical services for individuals, businesses
-      and industrial clients.</p>
-      <p><strong>My commitment:</strong> practical solutions and
-      professional service tailored to every project.</p>
-    </div>
+    <div><h2>Meet Omar</h2><p>I specialize in electronics and control systems repair, installation and maintenance. My focus is on troubleshooting faults, finding practical solutions and helping customers keep their equipment operating reliably.</p><p>I value quality workmanship, attention to detail, continuous learning and honest communication. My goal is to provide dependable technical services for individuals, businesses and industrial clients.</p><p><strong>My commitment:</strong> practical solutions and professional service tailored to every project.</p></div>
   </div>
 </section>
-
 <section class="container" id="services">
   <span class="eyebrow">WHAT I DO</span>
   <h2>Our technical services</h2>
   <p>Choose a service to discuss your repair or installation needs.</p>
   <div class="grid">
-    <article class="card">
-      <div class="symbol">⌁</div>
-      <h3>Electronics Repair</h3>
-      <p>Fault diagnosis, circuit board troubleshooting, component
-      replacement and electronic equipment servicing.</p>
-      <a class="btn" href="#contact">Request repair</a>
-    </article>
-    <article class="card">
-      <div class="symbol">⚙</div>
-      <h3>Control Systems</h3>
-      <p>Control panels, relays, contactors, sensors and control
-      circuit fault finding.</p>
-      <a class="btn" href="#contact">Discuss your system</a>
-    </article>
-    <article class="card">
-      <div class="symbol">🔧</div>
-      <h3>Installation & Setup</h3>
-      <p>Equipment installation, control wiring, setup, testing
-      and commissioning within my qualifications.</p>
-      <a class="btn" href="#contact">Request installation</a>
-    </article>
-    <article class="card">
-      <div class="symbol">✓</div>
-      <h3>Maintenance & Inspection</h3>
-      <p>Preventive servicing, fault tracing, equipment checks
-      and maintenance recommendations.</p>
-      <a class="btn" href="#contact">Book maintenance</a>
-    </article>
+    <article class="card"><div class="symbol">⌁</div><h3>Electronics Repair</h3><p>Fault diagnosis, circuit board troubleshooting, component replacement and electronic equipment servicing.</p><a class="btn" href="#contact">Request repair</a></article>
+    <article class="card"><div class="symbol">⚙</div><h3>Control Systems</h3><p>Control panels, relays, contactors, sensors and control circuit fault finding.</p><a class="btn" href="#contact">Discuss your system</a></article>
+    <article class="card"><div class="symbol">🔧</div><h3>Installation & Setup</h3><p>Equipment installation, control wiring, setup, testing and commissioning within my qualifications.</p><a class="btn" href="#contact">Request installation</a></article>
+    <article class="card"><div class="symbol">✓</div><h3>Maintenance & Inspection</h3><p>Preventive servicing, fault tracing, equipment checks and maintenance recommendations.</p><a class="btn" href="#contact">Book maintenance</a></article>
   </div>
 </section>
-
 <section class="container" id="pricing">
   <span class="eyebrow">TRANSPARENT PRICING</span>
   <h2>Service rates</h2>
-  <p>Indicative starting prices. Final quotations depend on the
-  equipment, fault, labour, materials and job location.</p>
+  <p>Indicative starting prices. Final quotations depend on the equipment, fault, labour, materials and job location.</p>
   <div class="grid">
-    <article class="card">
-      <h3>Electronics Repair</h3>
-      <p>Diagnosis and basic repair work.</p>
-      <div class="price">From KSh 1,000</div>
-      <a class="btn primary" href="#contact">Get a quote</a>
-    </article>
-    <article class="card">
-      <h3>Control Systems</h3>
-      <p>Control panels and complex fault finding.</p>
-      <div class="price">Custom quotation</div>
-      <a class="btn primary" href="#contact">Get a quote</a>
-    </article>
-    <article class="card">
-      <h3>Installation & Setup</h3>
-      <p>Equipment installation and testing.</p>
-      <div class="price">From KSh 2,500</div>
-      <a class="btn primary" href="#contact">Get a quote</a>
-    </article>
-    <article class="card">
-      <h3>Maintenance</h3>
-      <p>Routine checks and preventive servicing.</p>
-      <div class="price">From KSh 1,500</div>
-      <a class="btn primary" href="#contact">Get a quote</a>
-    </article>
+    <article class="card"><h3>Electronics Repair</h3><p>Diagnosis and basic repair work.</p><div class="price">From KSh 1,000</div><a class="btn primary" href="#contact">Get a quote</a></article>
+    <article class="card"><h3>Control Systems</h3><p>Control panels and complex fault finding.</p><div class="price">Custom quotation</div><a class="btn primary" href="#contact">Get a quote</a></article>
+    <article class="card"><h3>Installation & Setup</h3><p>Equipment installation and testing.</p><div class="price">From KSh 2,500</div><a class="btn primary" href="#contact">Get a quote</a></article>
+    <article class="card"><h3>Maintenance</h3><p>Routine checks and preventive servicing.</p><div class="price">From KSh 1,500</div><a class="btn primary" href="#contact">Get a quote</a></article>
   </div>
-  <p class="note">Prices are draft estimates, not verified market rates.
-  Parts, transport and additional work may cost extra. Confirm a written
-  quotation before work begins.</p>
+  <p class="note">Prices are draft estimates, not verified market rates. Parts, transport and additional work may cost extra. Confirm a written quotation before work begins.</p>
 </section>
-
 <section class="container" id="contact">
   <span class="eyebrow">LET'S WORK TOGETHER</span>
   <h2>Request a service or quotation</h2>
   <p>Tell me what equipment you have and what assistance you need.</p>
    <form id="enquiry">
-    <label>Your name
-      <input name="name" required autocomplete="name" placeholder="Full name">
-    </label>
-    <label>Phone number or email
-      <input name="contact" required placeholder="Your contact details">
-    </label>
-    <label>Service required
-      <select name="service">
-        <option>Electronics repair</option>
-        <option>Control systems</option>
-        <option>Installation and setup</option>
-        <option>Maintenance and inspection</option>
-        <option>Other technical service</option>
-      </select>
-    </label>
-    <label>Describe the job
-      <textarea name="details" required placeholder="Equipment, fault and work location"></textarea>
-    </label>
+    <label>Your name<input name="name" required autocomplete="name" placeholder="Full name"></label>
+    <label>Phone number or email<input name="contact" required placeholder="Your contact details"></label>
+    <label>Service required<select name="service"><option>Electronics repair</option><option>Control systems</option><option>Installation and setup</option><option>Maintenance and inspection</option><option>Other technical service</option></select></label>
+    <label>Describe the job<textarea name="details" required placeholder="Equipment, fault and work location"></textarea></label>
     <button class="btn primary" type="submit">Send service enquiry ↗</button>
+    <button class="btn btn-whatsapp" type="button" onclick="whatsappEnquiry()">💬 WhatsApp Order - Send Directly</button>
     <p id="status" role="status" aria-live="polite"></p>
   </form>
-  <p class="note">To enable direct WhatsApp enquiries, add your number
-  to the configuration in the script below.</p>
 </section>
 </main>
-
-<footer>
-  <div class="container">
-    <strong>omaromar.</strong> — Electronics & Control Services
-    <p>Professional repairs, installations and maintenance.</p>
-    <p>© <span id="year"></span> omaromar. All rights reserved.</p>
-  </div>
-</footer>
-
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  document.getElementById('enquiry').addEventListener('submit', function(e) {
- 
-  document.getElementById('enquiry').addEventListener('submit', async function(e) {
-  e.preventDefault();
-
-  const form = this;
-  const d = new FormData(form);
-  const status = document.getElementById('status');
-
-  const name = String(d.get('name') || '').trim();
-  const contact = String(d.get('contact') || '').trim();
-  const service = String(d.get('service') || '').trim();
-  const details = String(d.get('details') || '').trim();
-
-  status.textContent = 'Saving your enquiry...';
-
-  try {
-    const { db } = await import('./firebase.js');
-    const { collection, addDoc, serverTimestamp } =
-      await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
-
-    await addDoc(collection(db, 'requests'), {
-      name: name,
-      phone: contact,
-      email: contact,
-      message: 'Service: ' + service + '\nDetails: ' + details,
-      createdAt: serverTimestamp()
-    });
-
-    const message = [
-      'Service enquiry — omaromar',
-      'Name: ' + name,
-      'Contact: ' + contact,
-      'Service: ' + service,
-      'Details: ' + details
-    ].join('\n');
-
-    const whatsappNumber = '254707076782';
-    const url = 'https://wa.me/' + whatsappNumber +
-      '?text=' + encodeURIComponent(message);
-
-    status.textContent = 'Enquiry saved successfully. Opening WhatsApp...';
-    window.open(url, '_blank', 'noopener,noreferrer');
-  } catch (error) {
-    console.error(error);
-    status.textContent =
-      'We could not save your enquiry. Please try again later.';
-  }
- });
-</script>
 <section class="customer-contact">
   <h2>Request Our Services</h2>
   <p>Send us a message. We will contact you.</p>
-
   <form id="customerForm">
-    <input
-      type="text"
-      id="customerName"
-      placeholder="Your full name"
-      required
-    >
-
-    <input
-      type="tel"
-      id="customerPhone"
-      placeholder="Your phone number"
-      required
-    >
-
-    <input
-      type="email"
-      id="customerEmail"
-      placeholder="Your email address"
-      required
-    >
-
-    <textarea
-      id="customerMessage"
-      placeholder="Write your message..."
-      required
-    ></textarea>
-
+    <input type="text" id="customerName" placeholder="Your full name" required>
+    <input type="tel" id="customerPhone" placeholder="Your phone number" required>
+    <input type="email" id="customerEmail" placeholder="Your email address" required>
+    <textarea id="customerMessage" placeholder="Write your message..." required></textarea>
     <button type="submit">Send Message</button>
+    <button type="button" class="btn-wa" onclick="whatsappCustomer()">💬 WhatsApp Order</button>
     <p id="formStatus"></p>
   </form>
 </section>
+<footer><div class="container"><strong>omaromar.</strong> — Electronics & Control Services<p>Professional repairs, installations and maintenance.</p><p>© <span id="year"></span> omaromar. All rights reserved.</p></div></footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+const WHATSAPP_NUMBER = '254707076782';
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyGRb-7kVtS09h3NzjjsGqVclu3Zf4zHEiGn5wei-LhPUqjfnzgympP-mgN2uwQ/exec';
+function openWhatsApp(msg){ window.open('https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(msg), '_blank', 'noopener,noreferrer'); }
+function whatsappEnquiry(){
+  const form = document.getElementById('enquiry');
+  const d = new FormData(form);
+  const msg = ['Service enquiry — omaromar','Name: '+d.get('name'),'Contact: '+d.get('contact'),'Service: '+d.get('service'),'Details: '+d.get('details')].join('\n');
+  openWhatsApp(msg);
+}
+function whatsappCustomer(){
+  const msg = ['New Order — omaromar','Name: '+document.getElementById('customerName').value,'Phone: '+document.getElementById('customerPhone').value,'Email: '+document.getElementById('customerEmail').value,'Message: '+document.getElementById('customerMessage').value].join('\n');
+  openWhatsApp(msg);
+}
+</script>
 
 <script type="module">
 import { db } from "./firebase.js";
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-import {
-  collection,
-  addDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
-const form = document.getElementById("customerForm");
-
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const status = document.getElementById("formStatus");
-  const button = form.querySelector("button");
-
-  button.disabled = true;
-  status.textContent = "Sending...";
-
-  try {
-    await addDoc(collection(db, "requests"), {
-      name: document.getElementById("customerName").value.trim(),
-      phone: document.getElementById("customerPhone").value.trim(),
-      email: document.getElementById("customerEmail").value.trim(),
-      message: document.getElementById("customerMessage").value.trim(),
-      status: "New",
-      createdAt: serverTimestamp()
-    });
-
-    status.textContent = "Thank you! Your message was sent.";
-    form.reset();
-
-  } catch (error) {
-    console.error(error);
-    status.textContent = "Sorry, your message could not be sent. Please try again.";
-  }
-
-  button.disabled = false;
-});
-</script>
-<script type="module" src="./
-firebase.js"></script>
-<script>
-document.querySelector("form").addEventListener("submit", async function(e) {
+const enquiryForm = document.getElementById('enquiry');
+enquiryForm.addEventListener('submit', async function(e){
   e.preventDefault();
-  document.getElementById("status").textContent = "Sending...";
+  const status = document.getElementById('status');
+  const d = new FormData(enquiryForm);
+  const name = String(d.get('name')||'').trim();
+  const contact = String(d.get('contact')||'').trim();
+  const service = String(d.get('service')||'').trim();
+  const details = String(d.get('details')||'').trim();
+  status.textContent = 'Saving your enquiry...';
+  try{
+    await addDoc(collection(db, 'requests'), { name:name, phone:contact, email:contact, message:'Service: '+service+'\nDetails: '+details, createdAt: serverTimestamp() });
+    fetch(GOOGLE_SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name:name, contact:contact, service:service, details:details}) });
+    const message = ['Service enquiry — omaromar','Name: '+name,'Contact: '+contact,'Service: '+service,'Details: '+details].join('\n');
+    status.textContent = 'Enquiry saved successfully. Opening WhatsApp...';
+    window.open('https://wa.me/254707076782?text='+encodeURIComponent(message), '_blank', 'noopener,noreferrer');
+    enquiryForm.reset();
+  }catch(error){ console.error(error); status.textContent = 'We could not save your enquiry. Please try again later.'; }
+});
 
-  var formData = new FormData(e.target);
-  var data = {};
-  formData.forEach(function(value, key){ data[key] = value; });
-
-  await fetch("https://script.google.com/macros/s/AKfycbyGRb-7kVtS09h3NzjjsGqVclu3Zf4zHEiGn5wei-LhPUqjfnzgympP-mgN2uwQ/exec", {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
-
-  document.getElementById("status").textContent = "Order Sent! ✅";
-  e.target.reset();
+const customerForm = document.getElementById('customerForm');
+customerForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const status = document.getElementById('formStatus');
+  const button = customerForm.querySelector('button[type="submit"]');
+  button.disabled = true; status.textContent = 'Sending...';
+  const data = { name: document.getElementById('customerName').value.trim(), phone: document.getElementById('customerPhone').value.trim(), email: document.getElementById('customerEmail').value.trim(), message: document.getElementById('customerMessage').value.trim() };
+  try{
+    await addDoc(collection(db, 'requests'), { ...data, status:'New', createdAt: serverTimestamp() });
+    fetch(GOOGLE_SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    status.textContent = 'Thank you! Your message was sent. Opening WhatsApp...';
+    const waMsg = ['New Order — omaromar','Name: '+data.name,'Phone: '+data.phone,'Email: '+data.email,'Message: '+data.message].join('\n');
+    window.open('https://wa.me/254707076782?text='+encodeURIComponent(waMsg), '_blank', 'noopener,noreferrer');
+    customerForm.reset();
+  }catch(error){ console.error(error); status.textContent = 'Sorry, your message could not be sent. Please try again.'; }
+  button.disabled = false;
 });
 </script>
 </body>

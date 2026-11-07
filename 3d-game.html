@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Snake Runner 3D - Lemek Electronics & Supermarket</title>
+<style>
+body{margin:0;overflow:hidden;font-family:sans-serif;background:#87CEEB;touch-action:none}
+#ui{position:fixed;top:0;left:0;right:0;z-index:10;text-align:center;background:rgba(0,0,0,0.85);color:#fff;padding:8px}
+#scoreBig{font-size:26px;font-weight:bold;color:#00ff00}
+button{padding:11px 14px;border:none;border-radius:25px;font-weight:bold;margin:3px;font-size:14px}
+#start{background:#00e676} #ad{background:gold} #vip{background:#fff}
+#shopToggle{position:fixed;bottom:0;left:0;right:0;z-index:35;background:#ffcc00;color:#000;padding:14px;text-align:center;font-weight:bold;font-size:16px;border:none;border-radius:20px 20px 0 0;cursor:pointer}
+#shop{position:fixed;bottom:48px;left:0;right:0;z-index:34;background:#fff;color:#000;padding:12px;text-align:center;border-radius:20px 20px 0 0;box-shadow:0 -4px 10px rgba(0,0,0,0.3);max-height:55vh;overflow-y:auto;display:none}
+#shop a{background:#25D366;color:#fff;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:bold;display:inline-block;margin:4px;font-size:15px}
+#shop .elec{background:#000;color:#fff;padding:12px;border-radius:15px;margin-top:8px;text-align:left;font-size:13px;line-height:1.5}
+#shop .elec h3{margin:0 0 5px 0;text-align:center}
+#shop .elec a{background:#ffcc00;color:#000;display:block;text-align:center}
+#joystick{position:fixed;bottom:65px;left:50%;transform:translateX(-50%);z-index:20;display:grid;grid-template-columns:60px 60px 60px;grid-template-rows:60px 60px;gap:6px;justify-items:center}
+#joystick button{width:58px;height:58px;font-size:12px;background:#fff;border:2px solid #ddd;border-radius:50%;box-shadow:0 4px 8px rgba(0,0,0,0.3)}
+#effect{position:fixed;top:45%;left:50%;transform:translate(-50%,-50%);z-index:30;font-size:38px;font-weight:bold;color:yellow;text-shadow:2px 2px 0 #000;display:none;pointer-events:none}
+#speedBar{height:8px;background:#333;border-radius:5px;margin:5px 20px;overflow:hidden}
+#speedFill{height:100%;width:10%;background:linear-gradient(90deg,#00ff00,#ff0,#f00);transition:width 0.3s}
+#vipModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:50;display:none;align-items:center;justify-content:center}
+#vipBox{background:#fff;color:#000;padding:20px;border-radius:20px;text-align:center;max-width:300px;margin:20px}
+#vipBox a{display:block;background:#25D366;color:#fff;padding:12px;border-radius:20px;text-decoration:none;font-weight:bold;margin:10px 0}
+#vipBox input{padding:10px;width:90%;border:2px solid #ddd;border-radius:10px;text-align:center;font-size:16px}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+<div id="ui">
+<div>🐍 <b>SNAKE RUNNER 3D</b> - Lemek Electronics</div>
+<div id="scoreBig">Score: <span id="score">0</span> ⭐</div>
+<div>Best: <span id="best">0</span> | Level: <span id="level">1</span> | <span id="wallInfo">No Walls Yet - Learn First!</span></div>
+<div id="speedBar"><div id="speedFill"></div></div>
+<button id="start" onclick="startGame()">START GAME</button>
+<button id="ad" onclick="watchAd()">WATCH AD - EXTRA LIFE</button>
+<button id="vip" onclick="openVip()">VIP 100 KSH - NO ADS</button>
+<br><a href="https://wa.me/254707076782?text=Hi%20Lemek!%20I%20want%20to%20order" style="background:#25D366;color:#fff;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:bold;display:inline-block;margin-top:5px">WHATSAPP ORDER</a>
+</div>
+<div id="effect">+10</div>
+<div id="joystick">
+  <div></div><button onclick="setDir(0,-1)">UP</button><div></div>
+  <button onclick="setDir(-1,0)">LEFT</button><button onclick="setDir(0,1)">DOWN</button><button onclick="setDir(1,0)">RIGHT</button>
+</div>
+<div id="shop">
+<b>🏪 Lemek Mini Supermarket</b><br>Soda + Bread 150 Ksh - Free Delivery!<br><a href="https://wa.me/254707076782?text=Hi%20Lemek!%20I%20want%20to%20order%20Soda%20Bread%20150Ksh">ORDER FOOD ON WHATSAPP</a>
+<div class="elec">
+<h3>🔌 LEMEK ELECTRONICS - TV DOCTOR MOMBASA</h3>
+<b>TV MOUNTING:</b><br>
+- Wall Bracket 32"-50" = 2,000 Ksh<br>
+- Mount TV On Wall = 2,000 Ksh<br>
+- Total Bracket + Mount = 4,000 Ksh<br><br>
+<b>🌀 FAN:</b><br>
+- Fan = 4,000 Ksh<br>
+- Mount Fan On Ceiling = 1,500 Ksh<br><br>
+<b>📺 TV SCREEN REPLACEMENT:</b><br>
+I Pick, Repair, Deliver Back!<br>
+- 32" = 10,000 Ksh<br>
+- 43" = 18,000 Ksh<br>
+- 50" = 28,000 Ksh<br>
+- 55" = 30,000 Ksh<br><br>
+<b>💡 LED TV BACKLIGHT REPAIR + Spare:</b><br>
+- 32" = 4,600 Ksh<br>
+- 40" = 6,000 Ksh<br>
+- 43" = 6,500 Ksh<br>
+- 50" = 8,000 Ksh<br>
+- 55" = 10,000 Ksh<br><br>
+<a href="https://wa.me/254707076782?text=Hi%20Lemek!%20I%20want%20TV%20Repair%20%2F%20Installation.%20My%20TV%20is...">ORDER TV REPAIR / INSTALLATION</a>
+</div>
+<button onclick="toggleShop()" style="background:#000;color:#fff;width:100%;margin-top:10px">CLOSE SHOP - PLAY GAME</button>
+</div>
+<button id="shopToggle" onclick="toggleShop()">🛒 OPEN SHOP - SEE PRICES & ORDER</button>
+<div id="vipModal" onclick="if(event.target==this) closeVip()">
+  <div id="vipBox">
+    <h2>Remove Ads - 100 Ksh</h2>
+    <p><b>Step 1:</b> Send <b>100 Ksh</b> via M-Pesa to<br><b style="font-size:20px;color:green">0707 076 782</b><br>(Lemek - Pochi La Biashara)</p>
+    <p><b>Step 2:</b> Click below, send screenshot on WhatsApp, I send you code!</p>
+    <a href="https://wa.me/254707076782?text=Hi%20Lemek!%20I%20paid%20100%20Ksh%20for%20No%20Ads.%20Here%20is%20my%20screenshot">I PAID - SEND MY CODE</a>
+    <p>Have code? Enter it:</p>
+    <input id="vipCode" placeholder="Enter Code e.g. LEMEK100">
+    <br><br><button onclick="checkCode()" style="background:#000;color:#fff">Unlock</button>
+    <br><button onclick="closeVip()" style="background:#eee">Close</button>
+  </div>
+</div>
+<script>
+let shopOpen=false;
+function toggleShop(){ shopOpen=!shopOpen; document.getElementById("shop").style.display=shopOpen?"block":"none"; document.getElementById("shopToggle").innerText=shopOpen?"🔽 HIDE SHOP - PLAY GAME":"🛒 OPEN SHOP - SEE PRICES & ORDER"; }
+let scene=new THREE.Scene(); scene.background=new THREE.Color(0x87CEEB); scene.fog=new THREE.Fog(0x87CEEB, 25, 60);
+let camera=new THREE.PerspectiveCamera(65, innerWidth/innerHeight, 0.1, 1000);
+let renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setSize(innerWidth, innerHeight); renderer.shadowMap.enabled=true; document.body.appendChild(renderer.domElement);
+let sun=new THREE.DirectionalLight(0xffffff,1.3); sun.position.set(15,25,10); sun.castShadow=true; scene.add(sun); scene.add(new THREE.AmbientLight(0xffffff,0.6));
+let ground=new THREE.Mesh(new THREE.PlaneGeometry(50,50), new THREE.MeshStandardMaterial({color:0x4CAF50})); ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; scene.add(ground);
+let road=new THREE.Mesh(new THREE.PlaneGeometry(28,28), new THREE.MeshStandardMaterial({color:0xD2B48C})); road.rotation.x=-Math.PI/2; road.position.y=0.02; scene.add(road);
+let walls=[]; let wallMeshes=[];
+function clearWalls(){ wallMeshes.forEach(w=>scene.remove(w)); wallMeshes=[]; walls=[]; }
+function addWall(x,z){ let w=new THREE.Mesh(new THREE.BoxGeometry(1,1.5,1), new THREE.MeshStandardMaterial({color:0x8B4513})); w.position.set(x,0.75,z); w.castShadow=true; scene.add(w); wallMeshes.push(w); walls.push(x+","+z); }
+function buildMaze(level){ clearWalls(); if(level===0) return; if(level===1){ for(let z=-2; z<=2; z++){ addWall(5,z); } for(let z=-2; z<=2; z++){ addWall(-1,z); } } if(level>=2){ for(let z=-4; z<=4; z++){ addWall(5,z); } for(let z=-4; z<=4; z++){ addWall(-1,z); } for(let x=-3; x<=3; x++){ addWall(x,5); } for(let x=-3; x<=3; x++){ addWall(x,-6); } } }
+function addTree(x,z){ let trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.4,1.5), new THREE.MeshStandardMaterial({color:0x8B4513})); trunk.position.set(x,0.75,z); scene.add(trunk); let leaves=new THREE.Mesh(new THREE.SphereGeometry(1.2,12,12), new THREE.MeshStandardMaterial({color:0x228B22})); leaves.position.set(x,2.2,z); scene.add(leaves); }
+addTree(-16,-16); addTree(16,-16); addTree(-16,16); addTree(16,16);
+let clouds=[]; function addCloud(x,y,z){ let g=new THREE.Group(); for(let i=0;i<3;i++){ let c=new THREE.Mesh(new THREE.SphereGeometry(1.2,10,10), new THREE.MeshBasicMaterial({color:0xffffff})); c.position.x=i*1.2; g.add(c);} g.position.set(x,y,z); scene.add(g); clouds.push(g); }
+addCloud(-10,12,-15); addCloud(10,14,-10);
+let snake=[], food, golden=false, dx=1, dz=0, score=0, best=localStorage.getItem("bestLemek")||0, loop, speed=320, particles=[], level=0;
+document.getElementById("best").innerText=best; buildMaze(0);
+function makePart(x,z,isHead){ let m=new THREE.Mesh(new THREE.SphereGeometry(0.65,24,24), new THREE.MeshStandardMaterial({color:isHead?0x00ff00:0x2ecc71})); m.position.set(x,0.65,z); m.castShadow=true; scene.add(m); if(isHead){ let eyeMat=new THREE.MeshBasicMaterial({color:0x000}); let e1=new THREE.Mesh(new THREE.SphereGeometry(0.14,8,8), eyeMat); e1.position.set(0.3,0.35,0.45); m.add(e1); let e2=e1.clone(); e2.position.x=-0.3; m.add(e2); } return m; }
+function showEffect(txt){ let el=document.getElementById("effect"); el.innerText=txt; el.style.display="block"; setTimeout(()=>el.style.display="none",900); }
+function playSound(f){ try{ let ctx=new (window.AudioContext||window.webkitAudioContext)(); let o=ctx.createOscillator(); o.frequency.value=f; o.connect(ctx.destination); o.start(); o.stop(ctx.currentTime+0.15);}catch(e){} }
+function explode(x,z,color){ for(let i=0;i<12;i++){ let p=new THREE.Mesh(new THREE.SphereGeometry(0.15,6,6), new THREE.MeshBasicMaterial({color:color})); p.position.set(x,0.8,z); scene.add(p); particles.push({m:p, vx:(Math.random()-0.5)*0.4, vy:Math.random()*0.3, vz:(Math.random()-0.5)*0.4, life:20}); } }
+function startGame(){ snake.forEach(s=>scene.remove(s)); snake=[]; snake.push(makePart(-11,0,true)); snake.push(makePart(-12,0,false)); snake.push(makePart(-13,0,false)); dx=1; dz=0; score=0; speed=320; level=0; document.getElementById("score").innerText=0; document.getElementById("level").innerText=1; document.getElementById("wallInfo").innerText="No Walls Yet - Learn First!"; buildMaze(0); placeFood(); clearInterval(loop); loop=setInterval(move,speed); }
+function placeFood(){ if(food) scene.remove(food); golden=Math.random()<0.2; let col=golden?0xFFD700:0xff0000; food=new THREE.Mesh(new THREE.SphereGeometry(0.6,24,24), new THREE.MeshStandardMaterial({color:col, emissive:golden?0xFFD700:0x550000})); let fx, fz; do{ fx=Math.floor(Math.random()*20)-10; fz=Math.floor(Math.random()*20)-10; } while(walls.includes(fx+","+fz)); food.position.set(fx,0.65,fz); scene.add(food); }
+function move(){ let head=snake[0]; let nx=head.position.x+dx, nz=head.position.z+dz; if(nx>13||nx<-13||nz>13||nz<-13 || walls.includes(nx+","+nz)){ playSound(120); showEffect("HIT WALL!"); gameOver(); return; } let newHead=makePart(nx,nz,true); head.material.color.set(0x2ecc71); while(head.children.length>0) head.remove(head.children[0]); snake.unshift(newHead); if(food && Math.abs(nx-food.position.x)<0.1 && Math.abs(nz-food.position.z)<0.1){ let pts=golden?50:10; score+=pts; document.getElementById("score").innerText=score; explode(nx,nz, golden?0xFFD700:0xff0000); playSound(golden?880:520); showEffect(golden?"+50 GOLDEN!":"+10"); if(score>=30 && level===0){ level=1; buildMaze(1); document.getElementById("wallInfo").innerText="Walls Appeared! Be Careful!"; showEffect("WALLS APPEAR!"); } if(score>=70 && level===1){ level=2; document.getElementById("level").innerText=2; document.getElementById("wallInfo").innerText="Level 2 - More Walls!"; buildMaze(2); showEffect("LEVEL 2! MORE WALLS!"); } if(speed>120){ speed-=15; clearInterval(loop); loop=setInterval(move,speed); document.getElementById("speedFill").style.width=((320-speed)/200*100+10)+"%"; } placeFood(); } else { let tail=snake.pop(); scene.remove(tail); } camera.position.set(newHead.position.x, 10, newHead.position.z+10); camera.lookAt(newHead.position.x,0,newHead.position.z); }
+function gameOver(){ clearInterval(loop); setTimeout(()=>{ if(score>best){best=score; localStorage.setItem("bestLemek",best); document.getElementById("best").innerText=best;} alert("Game Over! Score: "+score+" - Order from Lemek!"); },200); }
+function setDir(x,z){ if(x===1 && dx===-1) return; if(x===-1 && dx===1) return; if(z===1 && dz===-1) return; if(z===-1 && dz===1) return; if(x!==0){dx=x;dz=0} if(z!==0){dx=0;dz=z} }
+document.addEventListener("keydown",e=>{ if(e.key==="ArrowUp") setDir(0,-1); if(e.key==="ArrowDown") setDir(0,1); if(e.key==="ArrowLeft") setDir(-1,0); if(e.key==="ArrowRight") setDir(1,0); });
+let sx=0,sy=0, isButtonTouch=false;
+document.getElementById("joystick").addEventListener("touchstart",e=>{ isButtonTouch=true; e.stopPropagation(); }, true);
+document.getElementById("joystick").addEventListener("touchend",e=>{ setTimeout(()=>{isButtonTouch=false},100); e.stopPropagation(); }, true);
+document.addEventListener("touchstart",e=>{ if(isButtonTouch) return; sx=e.touches[0].clientX; sy=e.touches[0].clientY; });
+document.addEventListener("touchend",e=>{ if(isButtonTouch) return; let ex=e.changedTouches[0].clientX, ey=e.changedTouches[0].clientY; let dxMove=ex-sx, dyMove=ey-sy; if(Math.abs(dxMove)<30 && Math.abs(dyMove)<30) return; if(Math.abs(dxMove)>Math.abs(dyMove)){ setDir(dxMove>0?1:-1,0)} else{ setDir(0, dyMove>0?1:-1)} });
+function watchAd(){ alert("Ad... +1 Life! (Connect AdMob later)"); }
+function openVip(){ document.getElementById("vipModal").style.display="flex"; }
+function closeVip(){ document.getElementById("vipModal").style.display="none"; }
+function checkCode(){ let code=document.getElementById("vipCode").value.trim().toUpperCase(); if(code==="LEMEK100" || code==="LEMEKVIP"){ localStorage.setItem("vipLemek","yes"); alert("VIP Unlocked! No Ads! Thank you for supporting Lemek!"); closeVip(); } else { alert("Wrong code. Pay 100 Ksh via Pochi La Biashara to 0707076782 then WhatsApp us."); } }
+camera.position.set(0,10,10); camera.lookAt(0,0,0);
+function animate(){ requestAnimationFrame(animate); clouds.forEach(c=>{ c.position.x+=0.02; if(c.position.x>25) c.position.x=-25; }); if(food){ food.rotation.y+=0.06; food.position.y=0.65+Math.sin(Date.now()*0.005)*0.2; } particles.forEach((p,i)=>{ p.m.position.x+=p.vx; p.m.position.y+=p.vy; p.m.position.z+=p.vz; p.vy-=0.01; p.life--; if(p.life<=0){ scene.remove(p.m); particles.splice(i,1);} }); renderer.render(scene,camera); } animate();
+</script>
+</body>
+</html>
