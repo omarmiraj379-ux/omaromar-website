@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Account | OMAROMAR Academy</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #24364b;
+    }
+
+    header {
+      background: #17365d;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+  width: 96%;
+  max-width: 1450px;
+  margin: 25px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+/* Keep login and registration forms compact */
+#loginSection,
+#registerSection {
+  max-width: 440px;
+  margin: 25px auto;
+}
+
+/* Give the student dashboard full width */
+#dashboardSection {
+  width: 100%;
+  max-width: none;
+}
+
+/* Video appearance */
+.lesson-card iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: none;
+  border-radius: 10px;
+}
+
+    h2 {
+      color: #17365d;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin: 9px 0;
+      border: 1px solid #d5dfeb;
+      border-radius: 7px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 12px;
+      background: #1756a9;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #103d79;
+    }
+
+    .switch {
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    .switch button {
+      background: #eaf2ff;
+      color: #1756a9;
+    }
+
+    #message {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    a {
+      color: #1756a9;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>OMAROMAR Learn Academy</h1>
+  <p>Learn. Practise. Grow.</p>
+</header>
+
+<div class="container">
+
+  <!-- Registration -->
+  <div id="registerSection">
+    <h2>Create Student Account</h2>
+    
+    <form id="registerForm">
+      <input
+        type="text"
+        id="studentName"
+        placeholder="Your full name"
+        required
+      >
+
+      <input
+        type="email"
+        id="registerEmail"
+        placeholder="Email address"
+        required
+      >
+
+      <input
+        type="password"
+        id="registerPassword"
+        placeholder="Create password (at least 6 characters)"
+        minlength="6"
+        required
+      >
+
+      <button type="submit">Create Account</button>
+    </form>
+
+    <div class="switch">
+      Already have an account?
+      <button type="button" id="showLogin">
+        Student Login
+      </button>
+    </div>
+  </div>
+
+  <!-- Login -->
+  <div id="loginSection" class="hidden">
+    <h2>Student Login</h2>
+    
+    <form id="loginForm">
+      <input
+        type="email"
+        id="loginEmail"
+        placeholder="Email address"
+        required
+      >
+
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="Password"
+        required
+      >
+
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="switch">
+      New student?
+      <button type="button" id="showRegister">
+        Create Account
+      </button>
+    </div>
+  </div>
+
+  <!-- Student dashboard -->
+<div id="dashboardSection" class="hidden">
+
+    <h2>Student Dashboard</h2>
+
+    <p id="welcomeMessage"></p>
+
+    <h2>My Electronics Lessons</h2>
+
+    <div id="studentLessons">
+      Loading lessons...
+    </div>
+
+    <button type="button" id="logoutButton">
+      Logout
+    </button>
+
+</div>
+
+  <p id="message"></p>
+
+  <p style="text-align:center">
+  <a href="index2.html">← Back to Learn Academy</a>
+  </p>
+
+</div>
+
+<script type="module">
+
+import { auth, db } from "./firebase.js";
+import {
+  collection,
+  getDocs,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const registerSection =
+  document.getElementById("registerSection");
+
+const loginSection =
+  document.getElementById("loginSection");
+
+const dashboardSection =
+  document.getElementById("dashboardSection");
+
+const message =
+  document.getElementById("message");
+ // LOAD PUBLISHED LESSONS
+async function loadStudentLessons() {
+  const lessonsContainer = document.getElementById("studentLessons");
+
+  lessonsContainer.textContent = "Loading lessons...";
+
+  try {
+    const lessonsQuery = query(
+      collection(db, "courses"),
+      where("published", "==", true)
+    );
+
+    const snapshot = await getDocs(lessonsQuery);
+
+    lessonsContainer.innerHTML = "";
+
+    if (snapshot.empty) {
+      lessonsContainer.textContent = "No published lessons available yet.";
+      return;
+    }
+
+    snapshot.forEach((lessonDoc) => {
+      const lesson = lessonDoc.data();
+
+      const lessonCard = document.createElement("div");
+      lessonCard.className = "lesson-card";
+
+      const title = document.createElement("h3");
+      title.textContent = lesson.title || "Untitled lesson";
+
+      const description = document.createElement("p");
+      description.textContent = lesson.description || "";
+
+      const video = document.createElement("iframe");
+      video.width = "100%";
+      video.height = "250";
+      video.src = "https://www.youtube-nocookie.com/embed/" +
+        getYouTubeId(lesson.youtubeId);
+      video.title = lesson.title || "Electronics lesson";
+      video.allowFullscreen = true;
+
+      lessonCard.append(title, description, video);
+      lessonsContainer.appendChild(lessonCard);
+    });
+
+  } catch (error) {
+    console.error("Lesson loading error:", error);
+    lessonsContainer.textContent = "Unable to load lessons: " + error.message;
+  }
+}
+
+// EXTRACT YOUTUBE VIDEO ID
+function getYouTubeId(value) {
+  if (!value) return "";
+
+  // Accept an ID already saved by the admin dashboard
+  if (/^[A-Za-z0-9_-]{11}$/.test(value)) {
+    return value;
+  }
+
+  // Also accept a complete YouTube URL
+  try {
+    const url = new URL(value);
+
+    if (url.hostname.includes("youtu.be")) {
+      return url.pathname.slice(1);
+    }
+
+    if (url.hostname.includes("youtube.com")) {
+      if (url.pathname === "/watch") {
+        return url.searchParams.get("v") || "";
+      }
+
+      if (
+        url.pathname.startsWith("/embed/") ||
+        url.pathname.startsWith("/shorts/")
+      ) {
+        return url.pathname.split("/")[2] || "";
+      }
+    }
+  } catch (error) {
+    return "";
+  }
+
+  return "";
+}
+// Switch between registration and login
+document.getElementById("showLogin").addEventListener("click", () => {
+  registerSection.classList.add("hidden");
+  loginSection.classList.remove("hidden");
+  message.textContent = "";
+});
+
+document.getElementById("showRegister").addEventListener("click", () => {
+  loginSection.classList.add("hidden");
+  registerSection.classList.remove("hidden");
+  message.textContent = "";
+});
+
+// Student registration
+document.getElementById("registerForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const name = document.getElementById("studentName").value.trim();
+  const email = document.getElementById("registerEmail").value.trim();
+  const password = document.getElementById("registerPassword").value;
+
+  message.textContent = "Creating your account...";
+
+  try {
+    const result = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    await updateProfile(result.user, {
+      displayName: name
+    });
+
+    message.textContent = "Account created successfully!";
+
+    document.getElementById("registerForm").reset();
+
+  } catch (error) {
+    message.textContent = error.message;
+  }
+});
+
+// Student login
+document.getElementById("loginForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  message.textContent = "Logging in...";
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+
+    message.textContent = "Login successful!";
+
+  } catch (error) {
+    message.textContent = error.message;
+  }
+});
+
+// Check whether a student is logged in
+onAuthStateChanged(auth, (user) => {
+
+  if (user) {
+    registerSection.classList.add("hidden");
+    loginSection.classList.add("hidden");
+    dashboardSection.classList.remove("hidden");
+
+     loadStudentLessons();
+
+    document.getElementById("welcomeMessage").textContent =
+      "Welcome, " + (user.displayName || user.email);
+
+  } else {
+    dashboardSection.classList.add("hidden");
+    registerSection.classList.remove("hidden");
+  }
+
+});
+
+// Logout
+document.getElementById("logoutButton").addEventListener("click", async () => {
+
+  try {
+    await signOut(auth);
+    message.textContent = "You have logged out.";
+
+  } catch (error) {
+    message.textContent = error.message;
+  }
+
+});
+
+</script>
+
+</body>
+</html>

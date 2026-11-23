@@ -1,0 +1,489 @@
+:root {
+  --bg: #0b1422;
+  --panel: #14253a;
+  --green: #c5f477;
+  --white: #f5f7fb;
+  --muted: #b9c7d8;
+  --line: #29394d;
+}
+
+/* TITLES ON DARK BACKGROUNDS */
+.hero h1,
+.hero h2,
+.hero h3,
+.dark-section h1,
+.dark-section h2,
+.dark-section h3 {
+  color: #ffffff !important;
+}
+
+/* GOLDEN YELLOW HIGHLIGHT TITLES */
+.hero .highlight,
+.dark-section .highlight,
+.accent-title {
+  color: #ffd54a !important;
+}
+
+/* ACADEMY MAIN BRAND TITLE */
+.eyebrow {
+  color: #102f57 !important;
+}
+
+/* TITLES ON WHITE AND LIGHT BACKGROUNDS */
+.academy-section h2,
+.academy-section h3,
+.light-section h2,
+.light-section h3 {
+  color: #17365d !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--white);
+  font: 16px/1.7 system-ui, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+/* NAVIGATION */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #0b1422f2;
+  border-bottom: 1px solid var(--line);
+}
+
+.nav {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 850;
+}
+
+.logo span,
+.accent {
+  color: var(--green);
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.links a:hover {
+  color: var(--green);
+}
+
+.menu-toggle {
+  display: none;
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font: inherit;
+}
+
+/* HERO */
+
+.hero {
+  padding: 85px 0 65px;
+  max-width: 850px;
+}
+
+/* OMAROMAR ELECTRONICS ACADEMY TITLE */
+.eyebrow {
+  display: block;
+  color: #102f57 !important;
+  font-size: clamp(22px, 3vw, 32px) !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.2px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  text-align: center;
+  opacity: 1 !important;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: .78rem;
+  font-weight: 750;
+  letter-spacing: .13em;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 7vw, 4.8rem);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+  margin: 18px 0;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.2;
+}
+
+h3 {
+  line-height: 1.3;
+}
+
+p {
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+
+/* BUTTONS */
+
+.btn {
+  display: inline-block;
+  padding: 11px 18px;
+  border-radius: 9px;
+  border: 1px solid #43516a;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+}
+
+.primary {
+  background: var(--green);
+  color: #101827;
+  border-color: var(--green);
+}
+
+.btn-whatsapp {
+  background: #25D366;
+  color: white;
+  border-color: #25D366;
+  width: 100%;
+}
+
+/* SECTIONS AND CARDS */
+
+section {
+  padding: 48px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  min-width: 0;
+}
+
+.symbol {
+  font-size: 2rem;
+  color: var(--green);
+}
+
+.price {
+  color: var(--green);
+  font-size: 1.15rem;
+  font-weight: 750;
+  margin: 18px 0;
+}
+
+/* ABOUT PROFILE */
+/* ABOUT OMAROMAR TITLE */
+.about-section h2,
+#about h2 {
+  color: #ffffff !important;
+}
+.profile {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.portrait {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+/* ELECTRONICS ACADEMY */
+
+
+/* ===== NEW LEARN ACADEMY DESIGN ===== */
+
+.academy-section {
+  background: #f4f7fc !important;
+  padding: 65px 25px;
+  border-radius: 18px;
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+.academy-section h2 {
+  color: #17365d;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 25px;
+}
+
+.academy-section h3 {
+  color: #17365d;
+  font-size: 21px;
+}
+
+.academy-section p {
+  color: #52647b;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+/* Academy cards */
+
+.academy-section .card,
+.academy-section .academy-card {
+  background: #ffffff;
+  border: 1px solid #e2eaf4;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 5px 18px rgba(25, 55, 90, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.academy-section .card:hover,
+.academy-section .academy-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(25, 55, 90, 0.12);
+}
+
+/* Academy buttons */
+
+.academy-section a,
+.academy-section button {
+  display: inline-block;
+  background: #1756a9;
+  color: #ffffff;
+  padding: 11px 19px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.academy-section a:hover,
+.academy-section button:hover {
+  background: #103d79;
+}
+
+/* Academy reading areas */
+
+.academy-section .lesson,
+.academy-section .resource {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid #e2eaf4;
+  margin-bottom: 18px;
+}
+
+/* Mobile display */
+
+@media (max-width: 700px) {
+  .academy-section {
+    padding: 35px 16px;
+  }
+
+  .academy-section h2 {
+    font-size: 26px;
+  }
+
+  .academy-section .card,
+  .academy-section .academy-card {
+    padding: 18px;
+  }
+}
+
+
+/* FORMS */
+
+form {
+  display: grid;
+  gap: 15px;
+  max-width: 680px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 13px;
+  border-radius: 8px;
+  border: 1px solid #43516a;
+  background: #101c2d;
+  color: white;
+  font: inherit;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--green);
+}
+
+/* CUSTOMER CONTACT FORM */
+
+.customer-contact {
+  max-width: 550px;
+  margin: 40px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.1);
+  font-family: Arial, sans-serif;
+  color: black;
+  width: 90%;
+}
+
+.customer-contact p {
+  color: #555;
+}
+
+.customer-contact input,
+.customer-contact textarea {
+  width: 100%;
+  padding: 13px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  box-sizing: border-box;
+  font-size: 16px;
+  background: white;
+  color: black;
+}
+
+.customer-contact textarea {
+  min-height: 120px;
+}
+
+.customer-contact button {
+  width: 100%;
+  padding: 14px;
+  background: #168b49;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.customer-contact button:disabled {
+  opacity: .6;
+}
+
+.customer-contact .btn-wa {
+  background: #25D366;
+  margin-top: 10px;
+}
+
+/* FOOTER */
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 25px 0;
+  color: var(--muted);
+}
+
+/* MOBILE PHONE DISPLAY */
+
+@media (max-width: 700px) {
+  .nav {
+    flex-wrap: wrap;
+    padding: 12px 0;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 0 12px;
+  }
+
+  .links.open {
+    display: flex;
+  }
+
+  .hero {
+    padding: 58px 0 38px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile {
+    grid-template-columns: 1fr;
+  }
+
+  .portrait {
+    max-width: 240px;
+  }
+
+  section {
+    padding: 34px 0;
+  }
+}

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OMAROMAR Academy - Admin</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #17243a;
+    }
+
+    header {
+      background: #10233f;
+      color: white;
+      padding: 22px 7%;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 23px;
+    }
+
+    header p {
+      margin-bottom: 0;
+      color: #cbd7e8;
+    }
+
+    main {
+      width: 92%;
+      max-width: 950px;
+      margin: 35px auto;
+    }
+
+    .panel {
+      background: white;
+      padding: 25px;
+      margin-bottom: 22px;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px rgba(20, 40, 70, 0.07);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #10233f;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccd5e2;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .check-row input {
+      width: auto;
+    }
+
+    button {
+      background: #1769aa;
+      color: white;
+      border: 0;
+      padding: 12px 19px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 5px 5px 5px 0;
+    }
+
+    button:hover {
+      background: #105486;
+    }
+
+    .secondary {
+      background: #64748b;
+    }
+
+    .danger {
+      background: #c0392b;
+    }
+
+    .course-card {
+      border: 1px solid #e0e6ef;
+      border-left: 5px solid #e5b93f;
+      padding: 18px;
+      border-radius: 9px;
+      margin-top: 15px;
+    }
+
+    .course-card h3 {
+      margin-top: 0;
+    }
+
+    .status {
+      color: #52647a;
+      margin-top: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .panel {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>OMAROMAR ELECTRONICS ACADEMY</h1>
+    <p>Private Administrator Dashboard</p>
+  </header>
+
+  <main>
+
+    <!-- ADMIN LOGIN -->
+    <section class="panel" id="loginPanel">
+      <h2>Administrator Login</h2>
+
+      <form id="loginForm">
+        <label for="adminEmail">Email address</label>
+        <input type="email" id="adminEmail" required>
+
+        <label for="adminPassword">Password</label>
+        <input type="password" id="adminPassword" required>
+
+        <br><br>
+        <button type="submit">Login to Dashboard</button>
+      </form>
+<button type="button" id="resetPasswordButton">
+  Forgot password?
+</button>
+      <p class="status" id="loginStatus"></p>
+    </section>
+
+    <!-- ADMIN DASHBOARD -->
+    <section id="dashboardPanel" class="hidden">
+
+      <div class="panel">
+        <div class="top-row">
+          <div>
+            <h2>Welcome, Administrator</h2>
+            <p id="adminEmailDisplay"></p>
+          </div>
+
+          <button id="logoutButton" class="danger">Logout</button>
+        </div>
+      </div>
+
+      <!-- ADD OR EDIT COURSE -->
+      <div class="panel">
+        <h2 id="courseFormTitle">Add a New Lesson</h2>
+
+        <form id="courseForm">
+
+          <label for="courseTitle">Course / Lesson Title</label>
+          <input
+            type="text"
+            id="courseTitle"
+            placeholder="Example: Introduction to Electronics"
+            required
+          >
+
+          <label for="courseDescription">Lesson Description</label>
+          <textarea
+            id="courseDescription"
+            placeholder="Explain what students will learn..."
+            required
+          ></textarea>
+
+          <label for="youtubeUrl">YouTube Video Link</label>
+          <input
+            type="url"
+            id="youtubeUrl"
+            placeholder="https://www.youtube.com/watch?v=..."
+            required
+          >
+
+          <div class="check-row">
+            <input type="checkbox" id="published" checked>
+            <label for="published" style="margin:0;">
+              Publish this lesson for students
+            </label>
+          </div>
+
+          <button type="submit" id="saveCourseButton">
+            Publish Lesson
+          </button>
+
+          <button
+            type="button"
+            id="cancelEditButton"
+            class="secondary hidden"
+          >
+            Cancel Edit
+          </button>
+
+        </form>
+
+        <p class="status" id="courseStatus"></p>
+      </div>
+
+      <!-- COURSE LIST -->
+      <div class="panel">
+        <h2>Manage Academy Lessons</h2>
+        <p>View, edit, publish, unpublish, or delete your lessons.</p>
+
+        <div id="courseList">
+          Loading lessons...
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script type="module" src="admin.js"></script>
+</body>
+</html>
